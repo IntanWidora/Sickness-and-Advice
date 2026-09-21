@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dr. English: Sickness & Advice - Grade 6 Interactive Learning</title>
+    <title>Dr. English: Grade 6 Interactive Learning - Sickness & Advice</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome CDN for Icons -->
@@ -11,7 +11,7 @@
     <!-- Google Fonts: Fredoka & Nunito -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     
     <script>
         tailwind.config = {
@@ -20,6 +20,7 @@
                     colors: {
                         brand: {
                             purple: '#6C5CE7',
+                            indigo: '#4C51BF',
                             teal: '#00CEC9',
                             yellow: '#FDCB6E',
                             pink: '#FD79A8',
@@ -36,22 +37,25 @@
             }
         }
     </script>
+    
     <style>
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 50%, #e0e7ff 100%);
+            background: linear-gradient(135deg, #e0f2fe 0%, #f0f9ff 40%, #e0e7ff 100%);
             min-height: 100vh;
         }
         .heading-font {
             font-family: 'Fredoka', sans-serif;
         }
+        .bounce-hover {
+            transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease;
+        }
         .bounce-hover:hover {
             transform: translateY(-6px) scale(1.02);
-            transition: transform 0.2s ease-in-out;
         }
         @keyframes pulseGlow {
-            0%, 100% { box-shadow: 0 0 15px rgba(108, 92, 231, 0.4); }
-            50% { box-shadow: 0 0 25px rgba(108, 92, 231, 0.8); }
+            0%, 100% { box-shadow: 0 0 15px rgba(108, 92, 231, 0.3); }
+            50% { box-shadow: 0 0 25px rgba(108, 92, 231, 0.7); }
         }
         .glow-effect {
             animation: pulseGlow 2.5s infinite;
@@ -63,7 +67,20 @@
         .floating {
             animation: floatAnim 3s ease-in-out infinite;
         }
-        /* Custom scrollbars */
+        /* Card Flip Styles */
+        .perspective-1000 {
+            perspective: 1000px;
+        }
+        .transform-style-3d {
+            transform-style: preserve-3d;
+        }
+        .backface-hidden {
+            backface-visibility: hidden;
+        }
+        .rotate-y-180 {
+            transform: rotateY(180deg);
+        }
+        /* Custom Scrollbars */
         ::-webkit-scrollbar {
             width: 8px;
         }
@@ -72,11 +89,11 @@
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb {
-            background: #94a3b8;
+            background: #818cf8;
             border-radius: 10px;
         }
         ::-webkit-scrollbar-thumb:hover {
-            background: #64748b;
+            background: #4f46e5;
         }
     </style>
 </head>
@@ -92,24 +109,27 @@
                 </div>
                 <div>
                     <h1 class="heading-font text-xl font-bold text-slate-800 tracking-wide leading-none">Dr. English</h1>
-                    <span class="text-xs font-bold text-brand-purple uppercase tracking-wider">Grade 6 • Sickness & Advice</span>
+                    <span class="text-xs font-extrabold text-brand-purple uppercase tracking-wider">Grade 6 • Sickness & Advice</span>
                 </div>
             </div>
 
             <!-- Student Profile Badge & Sound Toggle -->
             <div id="topProfileBadge" class="hidden flex items-center gap-3">
-                <button onclick="toggleAudioSpeech()" id="audioToggleBtn" class="w-10 h-10 rounded-full bg-indigo-50 hover:bg-indigo-100 text-brand-purple flex items-center justify-center transition" title="Toggle Sound Speech">
+                <button onclick="toggleAudioSpeech()" id="audioToggleBtn" class="w-10 h-10 rounded-2xl bg-indigo-50 hover:bg-indigo-100 text-brand-purple flex items-center justify-center transition" title="Toggle Sound Speech">
                     <i class="fa-solid fa-volume-high text-lg" id="audioIcon"></i>
                 </button>
-                <div class="flex items-center gap-2 bg-gradient-to-r from-indigo-50 to-purple-50 px-3 py-1.5 rounded-full border border-indigo-100">
-                    <span id="userAvatarDisplay" class="text-2xl">👨‍⚕️</span>
+                <div class="flex items-center gap-2.5 bg-gradient-to-r from-indigo-50 to-purple-50 px-3.5 py-1.5 rounded-2xl border border-indigo-100 shadow-sm">
+                    <div class="w-8 h-8 rounded-xl bg-indigo-600 text-white flex items-center justify-center font-bold text-sm">
+                        👨‍⚕️
+                    </div>
                     <div class="text-left hidden sm:block">
-                        <p id="userNameDisplay" class="text-sm font-bold leading-tight text-slate-800">Student</p>
-                        <p id="userClassDisplay" class="text-xs text-indigo-600 font-semibold">Grade 6A</p>
+                        <p id="userNameDisplay" class="text-sm font-extrabold leading-tight text-slate-800">Student</p>
+                        <p id="userClassDisplay" class="text-[11px] text-indigo-600 font-bold">Grade 6</p>
                     </div>
                 </div>
-                <button onclick="logoutIdentity()" class="text-xs font-semibold text-slate-500 hover:text-rose-500 bg-slate-100 px-2.5 py-1.5 rounded-lg transition" title="Change Identity">
+                <button onclick="logoutIdentity()" class="text-xs font-bold text-slate-500 hover:text-rose-600 bg-slate-100 hover:bg-rose-50 px-3 py-2 rounded-xl transition flex items-center gap-1.5" title="Change Identity">
                     <i class="fa-solid fa-right-from-bracket"></i>
+                    <span class="hidden md:inline">Exit</span>
                 </button>
             </div>
         </div>
@@ -119,8 +139,8 @@
     <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6">
 
         <!-- VIEW 0: STUDENT IDENTITY ENTRY -->
-        <section id="view-identity" class="max-w-lg mx-auto mt-6">
-            <div class="bg-white rounded-3xl shadow-xl p-6 sm:p-8 border border-indigo-50 relative overflow-hidden text-center">
+        <section id="view-identity" class="max-w-md mx-auto mt-6">
+            <div class="bg-white rounded-3xl shadow-xl p-6 sm:p-8 border border-indigo-100 relative overflow-hidden text-center">
                 <!-- Decorative background elements -->
                 <div class="absolute -top-10 -right-10 w-32 h-32 bg-purple-100 rounded-full blur-2xl opacity-60"></div>
                 <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-teal-100 rounded-full blur-2xl opacity-60"></div>
@@ -131,34 +151,31 @@
                     </div>
 
                     <h2 class="heading-font text-2xl sm:text-3xl font-bold text-slate-800 mb-2">Welcome Little Doctor!</h2>
-                    <p class="text-slate-600 text-sm mb-6">Please enter your student details to start your English learning journey today.</p>
+                    <p class="text-slate-600 text-xs sm:text-sm mb-6">Type your full name and class to unlock your interactive Grade 6 English lesson.</p>
 
                     <form id="identityForm" onsubmit="saveStudentIdentity(event)" class="space-y-4 text-left">
+                        <!-- Student Name Input -->
                         <div>
-                            <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5" for="studentName">Full Name</label>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
-                                    <i class="fa-solid fa-signature"></i>
-                                </span>
-                                <input type="text" id="studentName" required placeholder="e.g. Alex Johnson"
-                                    class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-brand-purple focus:bg-white transition">
-                            </div>
+                            <label class="block text-xs font-extrabold uppercase text-slate-600 mb-1.5" for="studentName">
+                                <i class="fa-solid fa-user mr-1 text-brand-purple"></i> Student Name (Nama Lengkap)
+                            </label>
+                            <input type="text" id="studentName" required placeholder="e.g. Budi Santoso"
+                                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 font-bold focus:outline-none focus:ring-2 focus:ring-brand-purple focus:bg-white transition text-sm">
                         </div>
 
+                        <!-- Student Class Input -->
                         <div>
-                            <label class="block text-xs font-bold uppercase text-slate-600 mb-1.5" for="studentClass">Class</label>
-                            <div class="relative">
-                                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400">
-                                    <i class="fa-solid fa-graduation-cap"></i>
-                                </span>
-                                <input type="text" id="studentClass" required placeholder="e.g. Grade 6-A"
-                                    class="w-full pl-10 pr-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 font-semibold focus:outline-none focus:ring-2 focus:ring-brand-purple focus:bg-white transition">
-                            </div>
+                            <label class="block text-xs font-extrabold uppercase text-slate-600 mb-1.5" for="studentClass">
+                                <i class="fa-solid fa-graduation-cap mr-1 text-brand-purple"></i> Class (Kelas)
+                            </label>
+                            <input type="text" id="studentClass" required placeholder="e.g. 6-A"
+                                class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-2xl text-slate-800 font-bold focus:outline-none focus:ring-2 focus:ring-brand-purple focus:bg-white transition text-sm">
                         </div>
 
-                        <button type="submit" class="w-full py-4 mt-2 bg-gradient-to-r from-brand-purple to-brand-blue text-white heading-font text-lg font-bold rounded-2xl shadow-lg shadow-indigo-200 hover:shadow-xl hover:scale-[1.01] active:scale-[0.99] transition flex items-center justify-center gap-2">
-                            <span>Start Learning</span>
-                            <i class="fa-solid fa-arrow-right"></i>
+                        <!-- Submit Button -->
+                        <button type="submit" class="w-full py-4 mt-2 bg-gradient-to-r from-brand-purple to-indigo-600 hover:from-indigo-600 hover:to-brand-purple text-white heading-font text-lg font-bold rounded-2xl shadow-lg shadow-indigo-200 hover:shadow-xl hover:scale-[1.01] active:scale-[0.99] transition flex items-center justify-center gap-2">
+                            <span>Start Learning Media</span>
+                            <i class="fa-solid fa-circle-arrow-right"></i>
                         </button>
                     </form>
                 </div>
@@ -171,11 +188,11 @@
             <div class="bg-gradient-to-r from-indigo-600 via-purple-600 to-brand-purple rounded-3xl p-6 sm:p-8 text-white shadow-xl relative overflow-hidden">
                 <div class="relative z-10 max-w-2xl">
                     <span class="inline-block px-3 py-1 bg-white/20 backdrop-blur-md text-xs font-extrabold uppercase tracking-wider rounded-full mb-3 text-white">
-                        <i class="fa-solid fa-star text-yellow-300 mr-1"></i> English Grade 6 Unit
+                        <i class="fa-solid fa-star text-yellow-300 mr-1"></i> Interactive English Grade 6
                     </span>
                     <h2 class="heading-font text-2xl sm:text-4xl font-bold mb-2">Hello, <span id="menuStudentName">Doctor</span>! 👋</h2>
-                    <p class="text-indigo-100 text-sm sm:text-base leading-relaxed">
-                        Ready to learn about illnesses, how to give advice using <strong>"should" & "shouldn't"</strong>, and how to treat patients? Choose a module below!
+                    <p class="text-indigo-100 text-xs sm:text-base leading-relaxed">
+                        Welcome to your English Learning Media! Learn to talk about sicknesses, give helpful advice with <strong>"should" & "shouldn't"</strong>, and prescribe remedies!
                     </p>
                 </div>
                 <div class="hidden md:block absolute right-8 top-1/2 -translate-y-1/2 text-8xl opacity-20 text-white pointer-events-none">
@@ -183,7 +200,7 @@
                 </div>
             </div>
 
-            <!-- Menu Grid Options -->
+            <!-- Menu Cards Grid -->
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
                 
                 <!-- 1. MATERIAL -->
@@ -193,10 +210,10 @@
                             <i class="fa-solid fa-book-open-reader"></i>
                         </div>
                         <h3 class="heading-font text-lg font-bold text-slate-800 mb-1">1. Material</h3>
-                        <p class="text-slate-500 text-xs">Learn sickness names, advice structures, and remedies.</p>
+                        <p class="text-slate-500 text-xs">Learn sickness vocabulary, advice grammar, and remedies.</p>
                     </div>
                     <div class="mt-4 flex items-center justify-between text-xs font-bold text-brand-purple group-hover:underline">
-                        <span>Explore Lessons</span>
+                        <span>Open Material</span>
                         <i class="fa-solid fa-chevron-right"></i>
                     </div>
                 </div>
@@ -208,10 +225,10 @@
                             <i class="fa-solid fa-pen-ruler"></i>
                         </div>
                         <h3 class="heading-font text-lg font-bold text-slate-800 mb-1">2. Practice</h3>
-                        <p class="text-slate-500 text-xs">Interactive exercises: matching & sentence building.</p>
+                        <p class="text-slate-500 text-xs">Interactive exercises: matching & grammar practice.</p>
                     </div>
                     <div class="mt-4 flex items-center justify-between text-xs font-bold text-brand-teal group-hover:underline">
-                        <span>Start Exercises</span>
+                        <span>Start Practice</span>
                         <i class="fa-solid fa-chevron-right"></i>
                     </div>
                 </div>
@@ -226,7 +243,7 @@
                         <p class="text-slate-500 text-xs">Play Dr. English Clinic & cure arriving patients!</p>
                     </div>
                     <div class="mt-4 flex items-center justify-between text-xs font-bold text-amber-600 group-hover:underline">
-                        <span>Play Game</span>
+                        <span>Play Clinic</span>
                         <i class="fa-solid fa-chevron-right"></i>
                     </div>
                 </div>
@@ -238,7 +255,7 @@
                             <i class="fa-solid fa-clipboard-check"></i>
                         </div>
                         <h3 class="heading-font text-lg font-bold text-slate-800 mb-1">4. Assessment</h3>
-                        <p class="text-slate-500 text-xs">Test your knowledge & get a Doctor Certificate!</p>
+                        <p class="text-slate-500 text-xs">Test your knowledge & earn a Doctor Certificate!</p>
                     </div>
                     <div class="mt-4 flex items-center justify-between text-xs font-bold text-brand-red group-hover:underline">
                         <span>Take Test</span>
@@ -253,10 +270,10 @@
                             <i class="fa-solid fa-heart-pulse"></i>
                         </div>
                         <h3 class="heading-font text-lg font-bold text-slate-800 mb-1">5. Reflection</h3>
-                        <p class="text-slate-500 text-xs">Self-assessment check & lesson feedback.</p>
+                        <p class="text-slate-500 text-xs">Self-assessment check & student learning log.</p>
                     </div>
                     <div class="mt-4 flex items-center justify-between text-xs font-bold text-brand-blue group-hover:underline">
-                        <span>View Summary</span>
+                        <span>Reflect Now</span>
                         <i class="fa-solid fa-chevron-right"></i>
                     </div>
                 </div>
@@ -271,15 +288,15 @@
                 <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-slate-600">
                     <div class="flex items-start gap-2.5 bg-slate-50 p-3 rounded-2xl">
                         <span class="w-6 h-6 rounded-full bg-purple-100 text-brand-purple flex items-center justify-center text-xs font-bold shrink-0">1</span>
-                        <span>Identify 10 common kinds of illnesses and their symptoms in English.</span>
+                        <span>Identify 10 common kinds of sicknesses and symptoms in English.</span>
                     </div>
                     <div class="flex items-start gap-2.5 bg-slate-50 p-3 rounded-2xl">
                         <span class="w-6 h-6 rounded-full bg-teal-100 text-brand-teal flex items-center justify-center text-xs font-bold shrink-0">2</span>
-                        <span>Formulate advice using <strong>"You should..."</strong> and <strong>"You shouldn't..."</strong> correctly.</span>
+                        <span>Formulate advice using <strong>"You should..."</strong> and <strong>"You shouldn't..."</strong>.</span>
                     </div>
                     <div class="flex items-start gap-2.5 bg-slate-50 p-3 rounded-2xl">
                         <span class="w-6 h-6 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center text-xs font-bold shrink-0">3</span>
-                        <span>Suggest appropriate health remedies and treatments for various sicknesses.</span>
+                        <span>Suggest appropriate health treatments and remedies for patients.</span>
                     </div>
                 </div>
             </div>
@@ -297,13 +314,13 @@
 
             <!-- Material Tabs -->
             <div class="flex flex-wrap gap-2 border-b border-slate-200 pb-2">
-                <button onclick="switchMaterialTab('tab-sickness')" id="tabBtn-sickness" class="material-tab-btn px-5 py-2.5 rounded-2xl font-extrabold text-sm transition bg-brand-purple text-white shadow-md">
+                <button onclick="switchMaterialTab('sickness')" id="tabBtn-sickness" class="material-tab-btn px-5 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm transition bg-brand-purple text-white shadow-md">
                     🤒 Kinds of Sickness
                 </button>
-                <button onclick="switchMaterialTab('tab-advice')" id="tabBtn-advice" class="material-tab-btn px-5 py-2.5 rounded-2xl font-extrabold text-sm transition bg-white text-slate-600 hover:bg-slate-100">
+                <button onclick="switchMaterialTab('advice')" id="tabBtn-advice" class="material-tab-btn px-5 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm transition bg-white text-slate-600 hover:bg-slate-100">
                     💡 Giving Advice (Should/Shouldn't)
                 </button>
-                <button onclick="switchMaterialTab('tab-treatments')" id="tabBtn-treatments" class="material-tab-btn px-5 py-2.5 rounded-2xl font-extrabold text-sm transition bg-white text-slate-600 hover:bg-slate-100">
+                <button onclick="switchMaterialTab('treatments')" id="tabBtn-treatments" class="material-tab-btn px-5 py-2.5 rounded-2xl font-extrabold text-xs sm:text-sm transition bg-white text-slate-600 hover:bg-slate-100">
                     💊 Remedies & Treatments
                 </button>
             </div>
@@ -316,14 +333,14 @@
                             <i class="fa-solid fa-volume-high"></i>
                         </div>
                         <div>
-                            <h4 class="font-bold text-sm text-indigo-900">Audio Pronunciation Enabled!</h4>
-                            <p class="text-xs text-indigo-700">Click the speaker icon <i class="fa-solid fa-volume-high"></i> on any card to listen to correct English pronunciation.</p>
+                            <h4 class="font-bold text-xs sm:text-sm text-indigo-900">Audio Pronunciation Included!</h4>
+                            <p class="text-[11px] sm:text-xs text-indigo-700">Click the audio button on any card to listen to clear English pronunciation.</p>
                         </div>
                     </div>
                 </div>
 
                 <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="sicknessCardsGrid">
-                    <!-- Cards will be populated dynamically by JS -->
+                    <!-- Cards populated dynamically by JS -->
                 </div>
             </div>
 
@@ -332,9 +349,9 @@
                 <!-- Advice Formula Card -->
                 <div class="bg-white rounded-3xl p-6 border border-purple-100 shadow-sm space-y-4">
                     <h3 class="heading-font text-xl font-bold text-brand-purple flex items-center gap-2">
-                        <i class="fa-solid fa-lightbulb"></i> Formula: Giving Advice with Should & Shouldn't
+                        <i class="fa-solid fa-lightbulb"></i> How to Give Advice with Should & Shouldn't
                     </h3>
-                    <p class="text-sm text-slate-600">
+                    <p class="text-xs sm:text-sm text-slate-600">
                         When someone is sick, we can give them advice (nasihat) using modal verbs <strong>"should"</strong> (harus/sebaiknya) or <strong>"shouldn't" / "should not"</strong> (sebaiknya tidak).
                     </p>
 
@@ -344,10 +361,10 @@
                             <div class="flex items-center gap-2 text-emerald-800 font-bold heading-font text-lg mb-2">
                                 <i class="fa-solid fa-circle-check"></i> Positive Advice (You Should...)
                             </div>
-                            <div class="bg-white p-3 rounded-xl border border-emerald-100 text-xs font-mono mb-2 text-slate-700">
+                            <div class="bg-white p-3 rounded-xl border border-emerald-100 text-xs font-mono mb-3 text-slate-700">
                                 <strong>Subject + should + Verb 1</strong>
                             </div>
-                            <ul class="text-xs text-slate-700 space-y-1.5 list-disc list-inside">
+                            <ul class="text-xs text-slate-700 space-y-2 list-disc list-inside">
                                 <li>You <strong>should rest</strong> in bed.</li>
                                 <li>He <strong>should see</strong> a dentist.</li>
                                 <li>She <strong>should drink</strong> warm water.</li>
@@ -359,10 +376,10 @@
                             <div class="flex items-center gap-2 text-rose-800 font-bold heading-font text-lg mb-2">
                                 <i class="fa-solid fa-circle-xmark"></i> Negative Advice (You Shouldn't...)
                             </div>
-                            <div class="bg-white p-3 rounded-xl border border-rose-100 text-xs font-mono mb-2 text-slate-700">
+                            <div class="bg-white p-3 rounded-xl border border-rose-100 text-xs font-mono mb-3 text-slate-700">
                                 <strong>Subject + shouldn't + Verb 1</strong>
                             </div>
-                            <ul class="text-xs text-slate-700 space-y-1.5 list-disc list-inside">
+                            <ul class="text-xs text-slate-700 space-y-2 list-disc list-inside">
                                 <li>You <strong>shouldn't drink</strong> ice water.</li>
                                 <li>He <strong>shouldn't eat</strong> spicy food.</li>
                                 <li>She <strong>shouldn't play</strong> outside.</li>
@@ -374,27 +391,27 @@
                 <!-- Expressing Sickness Dialogue Card -->
                 <div class="bg-white rounded-3xl p-6 border border-indigo-100 shadow-sm">
                     <h3 class="heading-font text-xl font-bold text-slate-800 mb-4 flex items-center gap-2">
-                        <i class="fa-solid fa-comments text-indigo-500"></i> Example Dialogue in Doctor's Office
+                        <i class="fa-solid fa-comments text-indigo-500"></i> Sample Dialogue at the Doctor's Clinic
                     </h3>
                     <div class="space-y-3">
-                        <div class="flex gap-3 items-start bg-slate-50 p-3.5 rounded-2xl">
+                        <div class="flex gap-3 items-start bg-slate-50 p-4 rounded-2xl border border-slate-100">
                             <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-xl shrink-0">🧑‍🎓</div>
-                            <div>
-                                <p class="text-xs font-bold text-slate-500">Patient (Budi):</p>
+                            <div class="flex-grow">
+                                <p class="text-xs font-extrabold text-slate-500">Patient (Budi):</p>
                                 <p class="text-sm font-bold text-slate-800">"Doctor, I have a terrible <strong>stomachache</strong>. What should I do?"</p>
                             </div>
-                            <button onclick="speakText('Doctor, I have a terrible stomachache. What should I do?')" class="ml-auto text-indigo-500 hover:text-indigo-700 p-2">
+                            <button onclick="speakText('Doctor, I have a terrible stomachache. What should I do?')" class="text-brand-purple hover:bg-purple-100 p-2 rounded-xl transition">
                                 <i class="fa-solid fa-volume-high"></i>
                             </button>
                         </div>
 
-                        <div class="flex gap-3 items-start bg-indigo-50 p-3.5 rounded-2xl">
+                        <div class="flex gap-3 items-start bg-indigo-50 p-4 rounded-2xl border border-indigo-100">
                             <div class="w-10 h-10 rounded-full bg-purple-200 flex items-center justify-center text-xl shrink-0">👨‍⚕️</div>
-                            <div>
-                                <p class="text-xs font-bold text-indigo-600">Dr. English:</p>
-                                <p class="text-sm font-bold text-slate-800">"You <strong>should drink</strong> warm water and take stomach medicine. You <strong>shouldn't eat</strong> spicy food today!"</p>
+                            <div class="flex-grow">
+                                <p class="text-xs font-extrabold text-indigo-600">Dr. English:</p>
+                                <p class="text-sm font-bold text-slate-800">"You <strong>should drink</strong> warm water and take stomach medicine. You <strong>shouldn't eat</strong> extra spicy food!"</p>
                             </div>
-                            <button onclick="speakText('You should drink warm water and take stomach medicine. You should not eat spicy food today!')" class="ml-auto text-indigo-500 hover:text-indigo-700 p-2">
+                            <button onclick="speakText('You should drink warm water and take stomach medicine. You should not eat extra spicy food!')" class="text-brand-purple hover:bg-purple-200 p-2 rounded-xl transition">
                                 <i class="fa-solid fa-volume-high"></i>
                             </button>
                         </div>
@@ -404,7 +421,7 @@
 
             <!-- TAB 3: TREATMENTS & REMEDIES -->
             <div id="tab-treatments" class="material-tab-content hidden space-y-4">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4" id="treatmentGrid">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4" id="treatmentGrid">
                     <!-- Populated by JS -->
                 </div>
             </div>
@@ -423,13 +440,13 @@
             <div class="bg-white rounded-3xl p-6 border border-teal-100 shadow-sm flex flex-col md:flex-row items-center justify-between gap-4">
                 <div>
                     <h2 class="heading-font text-2xl font-bold text-slate-800">Practice Time! ✏️</h2>
-                    <p class="text-sm text-slate-600">Test your skills by matching illnesses to remedies and filling in "should" or "shouldn't".</p>
+                    <p class="text-xs sm:text-sm text-slate-600">Match sicknesses to correct advice and fill in "should" or "shouldn't".</p>
                 </div>
-                <div class="flex items-center gap-2 bg-teal-50 px-4 py-2 rounded-2xl border border-teal-200">
-                    <i class="fa-solid fa-trophy text-amber-500 text-xl"></i>
+                <div class="flex items-center gap-3 bg-teal-50 px-4 py-2.5 rounded-2xl border border-teal-200">
+                    <i class="fa-solid fa-trophy text-amber-500 text-2xl"></i>
                     <div>
-                        <div class="text-xs text-slate-500 font-bold uppercase">Practice Score</div>
-                        <div class="text-lg font-bold text-teal-700" id="practiceScoreText">0 / 6</div>
+                        <div class="text-[10px] text-slate-500 font-extrabold uppercase">Practice Score</div>
+                        <div class="text-xl font-extrabold text-teal-700" id="practiceScoreText">0 / 6</div>
                     </div>
                 </div>
             </div>
@@ -441,7 +458,7 @@
                     <h3 class="heading-font text-lg font-bold text-slate-800 flex items-center gap-2">
                         <i class="fa-solid fa-link text-brand-teal"></i> Exercise A: Match Sickness to Advice
                     </h3>
-                    <p class="text-xs text-slate-500">Select an illness on the left, then click its correct advice on the right!</p>
+                    <p class="text-xs text-slate-500">First click an illness on the left, then click its corresponding advice on the right!</p>
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                         <div class="space-y-2" id="matchLeftList">
@@ -456,11 +473,11 @@
                 <!-- PART B: FILL IN SHOULD / SHOULDN'T -->
                 <div class="bg-white rounded-3xl p-6 border border-slate-100 shadow-sm space-y-4">
                     <h3 class="heading-font text-lg font-bold text-slate-800 flex items-center gap-2">
-                        <i class="fa-solid fa-pen-to-square text-brand-purple"></i> Exercise B: Fill in "should" or "shouldn't"
+                        <i class="fa-solid fa-pen-to-square text-brand-purple"></i> Exercise B: Select "should" or "shouldn't"
                     </h3>
 
                     <div class="space-y-4" id="fillBlankList">
-                        <!-- JS injected fill-in questions -->
+                        <!-- JS injected questions -->
                     </div>
                 </div>
             </div>
@@ -479,18 +496,18 @@
             <div class="bg-gradient-to-br from-amber-500 via-orange-500 to-rose-500 rounded-3xl p-6 text-white shadow-xl relative overflow-hidden">
                 <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
                     <div>
-                        <h2 class="heading-font text-2xl sm:text-3xl font-bold">🏥 Dr. English Hospital Clinic</h2>
-                        <p class="text-amber-100 text-xs sm:text-sm">Examine patients, diagnose their sickness, and prescribe the right remedy!</p>
+                        <h2 class="heading-font text-2xl sm:text-3xl font-bold">🏥 Dr. English Clinic Game</h2>
+                        <p class="text-amber-100 text-xs sm:text-sm">Examine patients, diagnose their sickness, and give correct advice!</p>
                     </div>
                     <!-- Game Stats -->
                     <div class="flex items-center gap-3 bg-white/20 backdrop-blur-md px-4 py-2 rounded-2xl border border-white/30">
                         <div class="text-center">
-                            <div class="text-[10px] uppercase tracking-wider text-amber-100">Patients Treated</div>
+                            <div class="text-[10px] uppercase font-bold tracking-wider text-amber-100">Patients Cured</div>
                             <div class="text-xl font-bold heading-font" id="patientsCuredCount">0 / 4</div>
                         </div>
                         <div class="h-8 w-px bg-white/30"></div>
                         <div class="text-center">
-                            <div class="text-[10px] uppercase tracking-wider text-amber-100">Score</div>
+                            <div class="text-[10px] uppercase font-bold tracking-wider text-amber-100">Clinic Score</div>
                             <div class="text-xl font-bold heading-font text-yellow-300" id="gameScoreVal">0</div>
                         </div>
                     </div>
@@ -503,39 +520,37 @@
                         <!-- Patient Avatar -->
                         <div class="text-center shrink-0">
                             <div class="w-24 h-24 bg-purple-100 rounded-full flex items-center justify-center text-6xl shadow-md floating" id="patientEmoji">
-                                🤒
+                                🤕
                             </div>
                             <p class="mt-2 font-bold heading-font text-slate-800" id="patientName">Patient Tommy</p>
                         </div>
 
                         <!-- Dialogue Bubble -->
                         <div class="bg-white p-4 rounded-2xl shadow-sm border border-slate-200 flex-grow relative">
-                            <!-- Bubble arrow -->
-                            <div class="hidden md:block absolute -left-3 top-1/2 -translate-y-1/2 w-0 h-0 border-y-8 border-y-transparent border-r-8 border-r-white"></div>
-                            <p class="text-xs font-extrabold uppercase text-indigo-500 mb-1">Patient Complaints:</p>
-                            <p class="text-base sm:text-lg font-bold text-slate-800" id="patientDialogue">"Ouch! My head feels heavy and it hurts so bad!"</p>
+                            <p class="text-xs font-extrabold uppercase text-indigo-500 mb-1">Patient Complaint:</p>
+                            <p class="text-base sm:text-lg font-bold text-slate-800" id="patientDialogue">"Ouch! My head feels so heavy!"</p>
                             <button onclick="speakPatientDialogue()" class="mt-2 inline-flex items-center gap-1.5 text-xs font-bold text-brand-purple hover:underline">
-                                <i class="fa-solid fa-volume-high"></i> Listen Patient
+                                <i class="fa-solid fa-volume-high"></i> Listen to Patient Speech
                             </button>
                         </div>
                     </div>
 
-                    <!-- Interactive Steps for Diagnosis & Advice -->
+                    <!-- Steps for Diagnosis & Advice -->
                     <div class="space-y-4">
                         <!-- Step 1: Diagnose -->
                         <div>
-                            <label class="block text-xs font-bold uppercase text-slate-500 mb-2">
-                                Step 1: What sickness does the patient have?
+                            <label class="block text-xs font-extrabold uppercase text-slate-500 mb-2">
+                                Step 1: What is the patient's sickness?
                             </label>
                             <div class="grid grid-cols-2 sm:grid-cols-4 gap-2" id="diagnosisOptions">
                                 <!-- JS options -->
                             </div>
                         </div>
 
-                        <!-- Step 2: Select Advice & Treatment -->
+                        <!-- Step 2: Select Advice -->
                         <div id="remedyStepArea" class="opacity-50 pointer-events-none transition-all duration-300">
-                            <label class="block text-xs font-bold uppercase text-slate-500 mb-2">
-                                Step 2: What is your medical advice for them?
+                            <label class="block text-xs font-extrabold uppercase text-slate-500 mb-2">
+                                Step 2: What medical advice will you give?
                             </label>
                             <div class="grid grid-cols-1 sm:grid-cols-3 gap-2" id="remedyOptions">
                                 <!-- JS options -->
@@ -543,19 +558,19 @@
                         </div>
                     </div>
 
-                    <!-- Submit Prescription Button -->
+                    <!-- Submit Button -->
                     <div class="pt-2">
                         <button id="prescribeBtn" disabled onclick="checkPrescription()" class="w-full py-3.5 bg-slate-300 text-slate-500 heading-font font-bold rounded-2xl transition flex items-center justify-center gap-2 cursor-not-allowed">
-                            <i class="fa-solid fa-notes-medical"></i> Give Advice & Treatment
+                            <i class="fa-solid fa-notes-medical"></i> Prescribe Advice & Treatment
                         </button>
                     </div>
                 </div>
 
-                <!-- Game Completion Modal Screen -->
+                <!-- Game Completion Screen -->
                 <div id="gameFinishScreen" class="hidden text-center py-8 space-y-4">
                     <div class="text-6xl floating">🏆</div>
-                    <h3 class="heading-font text-3xl font-bold">Great Job, Doctor!</h3>
-                    <p class="text-amber-100 max-w-md mx-auto">You successfully diagnosed and cured all patients today with accurate English advice!</p>
+                    <h3 class="heading-font text-3xl font-bold">Awesome Job, Doctor!</h3>
+                    <p class="text-amber-100 max-w-md mx-auto text-xs sm:text-sm">You diagnosed and cured all patients today using correct English advice!</p>
                     <div class="text-4xl font-extrabold text-yellow-300 heading-font" id="finalGameScoreText">Score: 100</div>
                     <button onclick="resetGame()" class="px-6 py-3 bg-white text-orange-600 heading-font font-bold rounded-2xl shadow-lg hover:scale-105 transition">
                         <i class="fa-solid fa-rotate-right mr-1"></i> Play Again
@@ -578,7 +593,7 @@
                 <!-- Quiz Progress Bar -->
                 <div class="flex items-center justify-between text-xs font-bold text-slate-500">
                     <span id="quizQuestionNum">Question 1 of 5</span>
-                    <span id="quizTimer" class="text-brand-red"><i class="fa-regular fa-clock mr-1"></i> 05:00</span>
+                    <span id="quizTag" class="text-brand-purple font-extrabold bg-purple-50 px-2.5 py-1 rounded-lg">Vocabulary</span>
                 </div>
                 <div class="w-full bg-slate-100 rounded-full h-2 overflow-hidden">
                     <div id="quizProgressBar" class="bg-brand-red h-full w-1/5 transition-all duration-300"></div>
@@ -586,7 +601,6 @@
 
                 <!-- Question Text -->
                 <div class="space-y-2">
-                    <span id="questionTag" class="inline-block px-2.5 py-1 bg-indigo-50 text-brand-purple rounded-lg text-xs font-bold">Vocabulary & Advice</span>
                     <h3 id="questionText" class="heading-font text-xl sm:text-2xl font-bold text-slate-800">
                         Santi has a sore throat. What should she drink?
                     </h3>
@@ -598,34 +612,35 @@
                 </div>
 
                 <!-- Next Button -->
-                <button onclick="submitQuizAnswer()" id="nextQuizBtn" class="w-full py-4 bg-brand-purple text-white heading-font font-bold text-base rounded-2xl shadow-lg hover:bg-indigo-700 transition">
-                    Next Question <i class="fa-solid fa-arrow-right ml-1"></i>
+                <button onclick="submitQuizAnswer()" id="nextQuizBtn" class="w-full py-4 bg-brand-purple text-white heading-font font-bold text-base rounded-2xl shadow-lg hover:bg-indigo-700 transition flex items-center justify-center gap-2">
+                    <span>Next Question</span>
+                    <i class="fa-solid fa-arrow-right"></i>
                 </button>
             </div>
 
-            <!-- Quiz Result & Doctor Certificate Screen -->
+            <!-- Quiz Result & Printable Certificate -->
             <div id="quizResultScreen" class="hidden max-w-3xl mx-auto space-y-6">
                 <div class="bg-white rounded-3xl p-6 sm:p-8 border-4 border-amber-300 shadow-xl text-center space-y-6 relative overflow-hidden">
                     <!-- Certificate Header -->
                     <div class="border-b border-amber-200 pb-4">
-                        <div class="text-4xl mb-2">📜</div>
-                        <h2 class="heading-font text-3xl font-bold text-slate-800 uppercase tracking-widest">Certificate of Achievement</h2>
-                        <p class="text-xs text-amber-800 font-semibold tracking-wider uppercase mt-1">Junior Medical English Specialist</p>
+                        <div class="text-5xl mb-2">📜</div>
+                        <h2 class="heading-font text-2xl sm:text-3xl font-bold text-slate-800 uppercase tracking-widest">Certificate of Achievement</h2>
+                        <p class="text-xs text-amber-800 font-extrabold tracking-wider uppercase mt-1">Grade 6 Junior Doctor Specialist</p>
                     </div>
 
-                    <!-- Certificate Content -->
+                    <!-- Certificate Details -->
                     <div class="space-y-2 py-2">
-                        <p class="text-sm text-slate-500">This certificate is proudly presented to</p>
-                        <h3 class="heading-font text-3xl font-extrabold text-brand-purple" id="certStudentName">Student Name</h3>
-                        <p class="text-xs font-bold text-slate-600" id="certStudentDetails">Grade 6-A • Absent No. 12</p>
-                        <p class="text-sm text-slate-600 max-w-md mx-auto pt-2">
-                            For successfully mastering English expressions for <strong>Kinds of Sickness, Giving Advice (Should/Shouldn't)</strong>, and Medical Treatments.
+                        <p class="text-xs sm:text-sm text-slate-500">This certificate is proudly awarded to:</p>
+                        <h3 class="heading-font text-2xl sm:text-3xl font-extrabold text-brand-purple" id="certStudentName">Student Name</h3>
+                        <p class="text-xs font-bold text-slate-600" id="certStudentDetails">Grade 6-A</p>
+                        <p class="text-xs sm:text-sm text-slate-600 max-w-md mx-auto pt-2">
+                            For demonstrating excellence in Grade 6 English on <strong>Kinds of Sickness, Giving Advice (Should/Shouldn't)</strong>, and Treatments.
                         </p>
                     </div>
 
                     <!-- Score Badge -->
                     <div class="bg-gradient-to-r from-amber-500 to-yellow-500 text-white rounded-2xl p-4 inline-block shadow-md px-8">
-                        <div class="text-xs uppercase font-extrabold tracking-wider">Final Assessment Score</div>
+                        <div class="text-[10px] uppercase font-extrabold tracking-wider">Assessment Score</div>
                         <div class="text-4xl font-extrabold heading-font" id="certScoreDisplay">100 / 100</div>
                         <div class="text-xs font-bold mt-1" id="certGradeFeedback">Grade: Excellent Doctor! 🌟</div>
                     </div>
@@ -661,23 +676,23 @@
                     <p class="text-xs text-slate-500">Think about what you learned today and share your feelings!</p>
                 </div>
 
-                <!-- Self-Checklist -->
+                <!-- Self Checklist -->
                 <div class="space-y-3">
                     <h3 class="heading-font text-base font-bold text-slate-800 border-b border-slate-100 pb-2">
                         1. Self Check: What can I do now?
                     </h3>
                     <div class="space-y-2">
-                        <label class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl cursor-pointer hover:bg-indigo-50 transition">
+                        <label class="flex items-center gap-3 bg-slate-50 p-3.5 rounded-2xl cursor-pointer hover:bg-indigo-50 transition">
                             <input type="checkbox" checked class="w-5 h-5 rounded text-brand-purple focus:ring-brand-purple">
-                            <span class="text-sm text-slate-700 font-semibold">I can name at least 8 kinds of sicknesses in English.</span>
+                            <span class="text-xs sm:text-sm text-slate-700 font-bold">I can name common sicknesses in English.</span>
                         </label>
-                        <label class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl cursor-pointer hover:bg-indigo-50 transition">
+                        <label class="flex items-center gap-3 bg-slate-50 p-3.5 rounded-2xl cursor-pointer hover:bg-indigo-50 transition">
                             <input type="checkbox" checked class="w-5 h-5 rounded text-brand-purple focus:ring-brand-purple">
-                            <span class="text-sm text-slate-700 font-semibold">I can use "You should..." to give positive medical advice.</span>
+                            <span class="text-xs sm:text-sm text-slate-700 font-bold">I can give advice using "You should...".</span>
                         </label>
-                        <label class="flex items-center gap-3 bg-slate-50 p-3 rounded-2xl cursor-pointer hover:bg-indigo-50 transition">
+                        <label class="flex items-center gap-3 bg-slate-50 p-3.5 rounded-2xl cursor-pointer hover:bg-indigo-50 transition">
                             <input type="checkbox" checked class="w-5 h-5 rounded text-brand-purple focus:ring-brand-purple">
-                            <span class="text-sm text-slate-700 font-semibold">I can use "You shouldn't..." to tell someone what to avoid when sick.</span>
+                            <span class="text-xs sm:text-sm text-slate-700 font-bold">I can warn someone using "You shouldn't...".</span>
                         </label>
                     </div>
                 </div>
@@ -685,24 +700,24 @@
                 <!-- Mood Selector -->
                 <div class="space-y-3">
                     <h3 class="heading-font text-base font-bold text-slate-800 border-b border-slate-100 pb-2">
-                        2. How do you feel about today's lesson?
+                        2. How do you feel about today's English lesson?
                     </h3>
                     <div class="grid grid-cols-4 gap-3 text-center">
-                        <button onclick="selectMood(this)" class="mood-btn p-3 bg-slate-50 border border-slate-200 rounded-2xl hover:border-brand-purple focus:ring-2 focus:ring-brand-purple">
+                        <button onclick="selectMood(this)" class="mood-btn p-3 bg-slate-50 border border-slate-200 rounded-2xl hover:border-brand-purple transition">
                             <div class="text-3xl">🤩</div>
-                            <div class="text-xs font-bold text-slate-600 mt-1">Super Fun!</div>
+                            <div class="text-[11px] font-bold text-slate-600 mt-1">Super Fun!</div>
                         </button>
-                        <button onclick="selectMood(this)" class="mood-btn p-3 bg-slate-50 border border-slate-200 rounded-2xl hover:border-brand-purple focus:ring-2 focus:ring-brand-purple">
+                        <button onclick="selectMood(this)" class="mood-btn p-3 bg-slate-50 border border-slate-200 rounded-2xl hover:border-brand-purple transition">
                             <div class="text-3xl">😊</div>
-                            <div class="text-xs font-bold text-slate-600 mt-1">Happy</div>
+                            <div class="text-[11px] font-bold text-slate-600 mt-1">Happy</div>
                         </button>
-                        <button onclick="selectMood(this)" class="mood-btn p-3 bg-slate-50 border border-slate-200 rounded-2xl hover:border-brand-purple focus:ring-2 focus:ring-brand-purple">
+                        <button onclick="selectMood(this)" class="mood-btn p-3 bg-slate-50 border border-slate-200 rounded-2xl hover:border-brand-purple transition">
                             <div class="text-3xl">😐</div>
-                            <div class="text-xs font-bold text-slate-600 mt-1">Okay</div>
+                            <div class="text-[11px] font-bold text-slate-600 mt-1">Okay</div>
                         </button>
-                        <button onclick="selectMood(this)" class="mood-btn p-3 bg-slate-50 border border-slate-200 rounded-2xl hover:border-brand-purple focus:ring-2 focus:ring-brand-purple">
+                        <button onclick="selectMood(this)" class="mood-btn p-3 bg-slate-50 border border-slate-200 rounded-2xl hover:border-brand-purple transition">
                             <div class="text-3xl">🤔</div>
-                            <div class="text-xs font-bold text-slate-600 mt-1">Need Help</div>
+                            <div class="text-[11px] font-bold text-slate-600 mt-1">Need Help</div>
                         </button>
                     </div>
                 </div>
@@ -710,15 +725,15 @@
                 <!-- Notes / Comments Box -->
                 <div class="space-y-2">
                     <label class="block text-xs font-bold uppercase text-slate-600" for="studentReflectionNotes">
-                        3. Write a short note about what you liked best today:
+                        3. Write a short note about what you enjoyed most:
                     </label>
-                    <textarea id="studentReflectionNotes" rows="3" placeholder="e.g. I really enjoyed playing Dr. English Clinic game and curing patients!"
-                        class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-sm focus:outline-none focus:ring-2 focus:ring-brand-purple focus:bg-white transition"></textarea>
+                    <textarea id="studentReflectionNotes" rows="3" placeholder="e.g. I liked playing the Dr. English Clinic Game!"
+                        class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-brand-purple focus:bg-white transition"></textarea>
                 </div>
 
                 <!-- Finish Lesson Button -->
                 <button onclick="submitReflection()" class="w-full py-4 bg-gradient-to-r from-brand-blue to-brand-purple text-white heading-font text-base font-bold rounded-2xl shadow-lg hover:shadow-xl transition flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-circle-check"></i> Complete & Finish Lesson
+                    <i class="fa-solid fa-circle-check"></i> Save & Finish Lesson
                 </button>
             </div>
         </section>
@@ -726,18 +741,16 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 mt-auto">
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs font-semibold text-slate-500 mt-auto">
         <p>© Grade 6 Interactive English Learning Media • Kinds of Sickness & Advice</p>
     </footer>
 
     <script>
-        /* APP STATE DATA */
-        let state = {
+        /* GLOBAL APPLICATION STATE */
+        const state = {
             student: {
                 name: '',
-                class: '6-A',
-                number: '',
-                avatar: '👨‍⚕️'
+                class: ''
             },
             speechEnabled: true,
             practiceScore: 0,
@@ -747,35 +760,36 @@
             selectedRemedy: null,
             quizIndex: 0,
             quizScore: 0,
-            quizAnswers: []
+            selectedMatchIllness: null,
+            matchedPairs: 0
         };
 
         /* DATA: KINDS OF SICKNESS */
         const sicknessData = [
-            { id: 'headache', name: 'Headache', icon: '🤕', meaning: 'Sakit Kepala', symptom: 'Pain in your head.', remedy: 'Rest in a quiet room and take medicine.', should: 'rest in bed', shouldn: 'listen to loud music' },
-            { id: 'toothache', name: 'Toothache', icon: '🦷', meaning: 'Sakit Gigi', symptom: 'Pain in your tooth or jaw.', remedy: 'Go to the dentist and avoid sweets.', should: 'see a dentist', shouldn: 'eat sweet candy' },
-            { id: 'stomachache', name: 'Stomachache', icon: '🤢', meaning: 'Sakit Perut', symptom: 'Pain in your tummy.', remedy: 'Drink warm tea and take stomach drops.', should: 'drink warm water', shouldn: 'eat spicy food' },
-            { id: 'fever', name: 'Fever', icon: '🤒', meaning: 'Demam', symptom: 'High body temperature.', remedy: 'Use a cool compress and rest.', should: 'take fever medicine', shouldn: 'play under the hot sun' },
-            { id: 'cough', name: 'Cough', icon: '😷', meaning: 'Batuk', symptom: 'Irritated throat causing coughing.', remedy: 'Drink warm honey tea or cough syrup.', should: 'drink cough syrup', shouldn: 'drink ice cold soda' },
-            { id: 'sorethroat', name: 'Sore Throat', icon: '🗣️', meaning: 'Sakit Tenggorokan', symptom: 'Pain when swallowing.', remedy: 'Gargle warm salt water and rest voice.', should: 'gargle warm salt water', shouldn: 'eat oily fried foods' },
-            { id: 'cold', name: 'Cold / Flu', icon: '🤧', meaning: 'Pilek / Flu', symptom: 'Runny nose and sneezing.', remedy: 'Wear warm clothes and use tissues.', should: 'wear a jacket and rest', shouldn: 'drink ice water' },
-            { id: 'earache', name: 'Earache', icon: '👂', meaning: 'Sakit Telinga', symptom: 'Pain inside your ear.', remedy: 'Visit a doctor and keep ear dry.', should: 'see an ENT doctor', shouldn: 'put dirty cotton buds inside' }
+            { id: 'headache', name: 'Headache', icon: '🤕', meaning: 'Sakit Kepala', symptom: 'Pain or aching in your head.', remedy: 'Rest in a quiet room and take medicine.', should: 'rest in bed', shouldn: 'listen to loud music' },
+            { id: 'toothache', name: 'Toothache', icon: '🦷', meaning: 'Sakit Gigi', symptom: 'Pain in or around a tooth.', remedy: 'Go to the dentist and brush teeth.', should: 'see a dentist', shouldn: 'eat sweet candy' },
+            { id: 'stomachache', name: 'Stomachache', icon: '🤢', meaning: 'Sakit Perut', symptom: 'Pain in your stomach area.', remedy: 'Drink warm water and take medicine.', should: 'drink warm water', shouldn: 'eat extra spicy food' },
+            { id: 'fever', name: 'Fever', icon: '🤒', meaning: 'Demam', symptom: 'High body temperature.', remedy: 'Rest and put a cool damp cloth on forehead.', should: 'take fever medicine', shouldn: 'play outside in hot sun' },
+            { id: 'cough', name: 'Cough', icon: '😷', meaning: 'Batuk', symptom: 'Throat irritation causing coughing.', remedy: 'Drink warm honey tea or syrup.', should: 'drink cough syrup', shouldn: 'drink ice cold soda' },
+            { id: 'sorethroat', name: 'Sore Throat', icon: '🗣️', meaning: 'Sakit Tenggorokan', symptom: 'Painful feeling in throat when swallowing.', remedy: 'Gargle warm salt water and rest voice.', should: 'gargle warm salt water', shouldn: 'eat oily fried snacks' },
+            { id: 'cold', name: 'Cold / Flu', icon: '🤧', meaning: 'Pilek / Flu', symptom: 'Runny nose and sneezing.', remedy: 'Wear warm jacket and stay warm.', should: 'wear a jacket and rest', shouldn: 'drink ice water' },
+            { id: 'earache', name: 'Earache', icon: '👂', meaning: 'Sakit Telinga', symptom: 'Pain inside your ear.', remedy: 'Visit an ENT doctor and keep ears dry.', should: 'see an ENT doctor', shouldn: 'insert dirty objects into ears' }
         ];
 
         /* DATA: TREATMENTS */
         const treatmentData = [
-            { title: 'Take Medicine', icon: '💊', desc: 'Minum obat sesuai petunjuk dokter.' },
-            { title: 'Drink Warm Water', icon: '☕', desc: 'Minum air hangat untuk meredakan tenggorokan/perut.' },
-            { title: 'Go to the Dentist', icon: '🩺', desc: 'Periksa ke dokter gigi saat sakit gigi.' },
-            { title: 'Rest in Bed', icon: '🛏️', desc: 'Istirahat cukup di tempat tidur.' },
-            { title: 'Put a Bandage', icon: '🩹', desc: 'Tutup luka dengan plester bersih.' },
-            { title: 'Wear Warm Jacket', icon: '🧥', desc: 'Gunakan pakaian hangat saat flu/demam.' }
+            { title: 'Take Medicine', icon: '💊', desc: 'Minum obat sesuai resep dokter.' },
+            { title: 'Drink Warm Water', icon: '☕', desc: 'Minum air hangat untuk meredakan tenggorokan.' },
+            { title: 'See a Dentist', icon: '🩺', desc: 'Periksa ke dokter gigi saat sakit gigi.' },
+            { title: 'Rest in Bed', icon: '🛏️', desc: 'Istirahat secukupnya di tempat tidur.' },
+            { title: 'Wear Warm Jacket', icon: '🧥', desc: 'Gunakan pakaian hangat saat flu/demam.' },
+            { title: 'Avoid Cold Drinks', icon: '🧊', desc: 'Hindari es dan minuman dingin saat batuk.' }
         ];
 
         /* DATA: PRACTICE EXERCISES */
         const practiceData = {
             matches: [
-                { illness: 'Toothache 🦷', advice: 'Go to the dentist and avoid sweets.' },
+                { illness: 'Toothache 🦷', advice: 'Go to the dentist and avoid sweet candy.' },
                 { illness: 'Stomachache 🤢', advice: 'Drink warm water and avoid spicy food.' },
                 { illness: 'Fever 🤒', advice: 'Rest in bed and put a cool towel on forehead.' }
             ],
@@ -820,14 +834,14 @@
                 ],
                 remedyOptions: [
                     { id: 'spicy', label: 'You should eat more spicy chips.' },
-                    { id: 'warmwater', label: 'You should drink warm water and take stomach drop medicine.' },
+                    { id: 'warmwater', label: 'You should drink warm water and take stomach medicine.' },
                     { id: 'run', label: 'You should run 5 kilometers right now.' }
                 ]
             },
             {
                 name: 'Patient Maya',
                 emoji: '🦷',
-                dialogue: "My tooth hurts when I try to chew food! I ate 3 lollipop candies.",
+                dialogue: "My tooth hurts when I chew! I ate 3 sweet lollipops.",
                 correctDiag: 'toothache',
                 correctRemedy: 'dentist',
                 diagOptions: [
@@ -837,7 +851,7 @@
                     { id: 'headache', label: 'Headache 🤕' }
                 ],
                 remedyOptions: [
-                    { id: 'dentist', label: 'You should see a dentist and shouldn\'t eat sweet candy.' },
+                    { id: 'dentist', label: 'You should see a dentist and shouldn\'t eat candy.' },
                     { id: 'icecream', label: 'You should eat 3 tubs of cold ice cream.' },
                     { id: 'sleep', label: 'You should just listen to music.' }
                 ]
@@ -856,7 +870,7 @@
                 ],
                 remedyOptions: [
                     { id: 'swimming', label: 'You should go swimming in cold water.' },
-                    { id: 'jacket', label: 'You should wear a warm jacket, drink warm water, and rest.' },
+                    { id: 'jacket', label: 'You should wear a warm jacket and drink warm water.' },
                     { id: 'soda', label: 'You should drink cold soda.' }
                 ]
             }
@@ -865,27 +879,27 @@
         /* DATA: ASSESSMENT QUIZ */
         const quizQuestions = [
             {
-                question: "What is the English term for 'Sakit Gigi'?",
+                question: "What is the English word for 'Sakit Gigi'?",
                 options: ["Stomachache", "Toothache", "Headache", "Sore Throat"],
                 answer: 1,
                 tag: "Vocabulary"
             },
             {
-                question: "Rani has a fever. Complete the advice: 'She ________ drink ice water.'",
+                question: "Rani has a fever. Complete the sentence: 'She ________ drink ice water.'",
                 options: ["should", "shouldn't", "must to", "can"],
                 answer: 1,
                 tag: "Grammar: Advice"
             },
             {
-                question: "What should you do if you have a terrible stomachache?",
+                question: "What SHOULD you do if you have a terrible stomachache?",
                 options: [
                     "Drink warm water and take stomach medicine.",
-                    "Eat spicy chili snacks.",
+                    "Eat spicy chili chips.",
                     "Drink cold soda pop.",
                     "Play under hot sunshine."
                 ],
                 answer: 0,
-                tag: "Treatment & Remedies"
+                tag: "Treatment & Advice"
             },
             {
                 question: "Translate into English: 'Kamu sebaiknya pergi ke dokter gigi.'",
@@ -896,59 +910,56 @@
                     "You shouldn't eat medicine."
                 ],
                 answer: 1,
-                tag: "Translation & Advice"
+                tag: "Translation"
             },
             {
                 question: "If someone has a cough and sore throat, they SHOULD NOT...",
                 options: [
                     "Drink warm honey tea",
                     "Take cough syrup",
-                    "Drink ice-cold water and eat oily fried snacks",
+                    "Drink ice-cold water and eat oily fried foods",
                     "Rest at home"
                 ],
                 answer: 2,
-                tag: "Health Recommendations"
+                tag: "Health Advice"
             }
         ];
 
-        /* INITIALIZATION */
+        /* INITIALIZATION ON WINDOW LOAD */
         window.onload = function() {
             renderMaterialData();
             renderPracticeData();
             loadGamePatient();
+            loadQuizQuestion();
         };
 
         /* NAVIGATION SYSTEM */
         function navigateTo(viewId) {
-            // Hide all views
             const views = document.querySelectorAll('main > section');
             views.forEach(v => v.classList.add('hidden'));
 
-            // Show selected view
             const target = document.getElementById(`view-${viewId}`);
             if (target) {
                 target.classList.remove('hidden');
             }
 
-            // Scroll top
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        /* STUDENT IDENTITY LOGIC */
+        /* STUDENT IDENTITY FORM HANDLER */
         function saveStudentIdentity(event) {
             event.preventDefault();
-            const name = document.getElementById('studentName').value.trim();
-            const studentClass = document.getElementById('studentClass').value.trim();
+            const nameInput = document.getElementById('studentName').value.trim();
+            const classInput = document.getElementById('studentClass').value.trim();
 
-            if (!name || !studentClass) return;
+            if (!nameInput || !classInput) return;
 
-            state.student = { name, class: studentClass, avatar: '👨‍⚕️' };
+            state.student = { name: nameInput, class: classInput };
 
-            // Update UI displays
-            document.getElementById('userNameDisplay').textContent = name;
-            document.getElementById('userClassDisplay').textContent = studentClass;
-            document.getElementById('userAvatarDisplay').textContent = '👨‍⚕️';
-            document.getElementById('menuStudentName').textContent = name;
+            // Update UI elements
+            document.getElementById('userNameDisplay').textContent = state.student.name;
+            document.getElementById('userClassDisplay').textContent = `Class ${state.student.class}`;
+            document.getElementById('menuStudentName').textContent = state.student.name;
             document.getElementById('topProfileBadge').classList.remove('hidden');
 
             // Navigate to main menu
@@ -962,14 +973,14 @@
             navigateTo('identity');
         }
 
-        /* WEB SPEECH SYNTHESIS (PRONUNCIATION) */
+        /* WEB SPEECH SYNTHESIS ENGINE */
         function speakText(text) {
             if (!state.speechEnabled) return;
             if ('speechSynthesis' in window) {
-                window.speechSynthesis.cancel(); // Stop current speech
+                window.speechSynthesis.cancel();
                 const utterance = new SpeechSynthesisUtterance(text);
                 utterance.lang = 'en-US';
-                utterance.rate = 0.9; // Slightly slower for elementary kids
+                utterance.rate = 0.88;
                 window.speechSynthesis.speak(utterance);
             }
         }
@@ -987,15 +998,15 @@
             }
         }
 
-        /* SOUND EFFECTS SYNTHESIZER */
+        /* WEB AUDIO SYNTHESIZER (SOUND EFFECTS) */
         function playChimeSound() {
             try {
                 const ctx = new (window.AudioContext || window.webkitAudioContext)();
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
                 osc.type = 'sine';
-                osc.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
-                osc.frequency.exponentialRampToValueAtTime(659.25, ctx.currentTime + 0.15); // E5
+                osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(659.25, ctx.currentTime + 0.15);
                 gain.gain.setValueAtTime(0.2, ctx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.3);
                 osc.connect(gain);
@@ -1011,8 +1022,8 @@
                 const osc = ctx.createOscillator();
                 const gain = ctx.createGain();
                 osc.type = 'sawtooth';
-                osc.frequency.setValueAtTime(200, ctx.currentTime);
-                osc.frequency.setValueAtTime(150, ctx.currentTime + 0.1);
+                osc.frequency.setValueAtTime(220, ctx.currentTime);
+                osc.frequency.setValueAtTime(160, ctx.currentTime + 0.1);
                 gain.gain.setValueAtTime(0.2, ctx.currentTime);
                 gain.gain.exponentialRampToValueAtTime(0.01, ctx.currentTime + 0.25);
                 osc.connect(gain);
@@ -1022,43 +1033,41 @@
             } catch(e){}
         }
 
-        /* RENDER MATERIAL DATA */
+        /* MATERIAL LESSON RENDERER */
         function renderMaterialData() {
-            // Render Sickness Cards
             const grid = document.getElementById('sicknessCardsGrid');
             grid.innerHTML = sicknessData.map(item => `
-                <div class="bg-white rounded-3xl p-5 border border-purple-50 shadow-sm hover:shadow-md transition space-y-3 relative group">
+                <div class="bg-white rounded-3xl p-5 border border-purple-100 shadow-sm hover:shadow-md transition space-y-3 relative group">
                     <div class="flex items-center justify-between">
                         <span class="text-4xl floating">${item.icon}</span>
-                        <button onclick="speakSicknessCard('${item.id}')" class="w-10 h-10 rounded-full bg-purple-50 hover:bg-purple-100 text-brand-purple flex items-center justify-center transition" title="Listen Pronunciation">
+                        <button onclick="speakSicknessCard('${item.id}')" class="w-10 h-10 rounded-2xl bg-purple-50 hover:bg-purple-100 text-brand-purple flex items-center justify-center transition" title="Listen Pronunciation">
                             <i class="fa-solid fa-volume-high"></i>
                         </button>
                     </div>
                     <div>
                         <h4 class="heading-font text-lg font-bold text-slate-800">${item.name}</h4>
-                        <span class="inline-block text-xs font-semibold bg-purple-100 text-brand-purple px-2.5 py-0.5 rounded-full">${item.meaning}</span>
+                        <span class="inline-block text-[11px] font-extrabold bg-purple-100 text-brand-purple px-2.5 py-0.5 rounded-full">${item.meaning}</span>
                     </div>
-                    <p class="text-xs text-slate-500">${item.symptom}</p>
+                    <p class="text-xs text-slate-500 font-semibold">${item.symptom}</p>
                     <div class="pt-2 border-t border-slate-100 space-y-1 text-xs">
-                        <div class="text-emerald-700 font-medium flex items-center gap-1">
+                        <div class="text-emerald-700 font-bold flex items-center gap-1.5">
                             <i class="fa-solid fa-circle-check text-emerald-500"></i>
-                            <span><strong>Should:</strong> ${item.should}</span>
+                            <span>Should: ${item.should}</span>
                         </div>
-                        <div class="text-rose-700 font-medium flex items-center gap-1">
+                        <div class="text-rose-700 font-bold flex items-center gap-1.5">
                             <i class="fa-solid fa-circle-xmark text-rose-500"></i>
-                            <span><strong>Shouldn't:</strong> ${item.shouldn}</span>
+                            <span>Shouldn't: ${item.shouldn}</span>
                         </div>
                     </div>
                 </div>
             `).join('');
 
-            // Render Treatment Grid
             const treatGrid = document.getElementById('treatmentGrid');
             treatGrid.innerHTML = treatmentData.map(t => `
-                <div class="bg-white rounded-3xl p-5 border border-teal-50 shadow-sm hover:shadow-md transition text-center space-y-2">
+                <div class="bg-white rounded-3xl p-5 border border-teal-100 shadow-sm hover:shadow-md transition text-center space-y-2">
                     <div class="text-4xl">${t.icon}</div>
                     <h4 class="heading-font text-base font-bold text-slate-800">${t.title}</h4>
-                    <p class="text-xs text-slate-500">${t.desc}</p>
+                    <p class="text-xs text-slate-500 font-semibold">${t.desc}</p>
                 </div>
             `).join('');
         }
@@ -1070,15 +1079,15 @@
             }
         }
 
-        function switchMaterialTab(tabId) {
+        function switchMaterialTab(tabName) {
             document.querySelectorAll('.material-tab-content').forEach(el => el.classList.add('hidden'));
             document.querySelectorAll('.material-tab-btn').forEach(btn => {
                 btn.classList.remove('bg-brand-purple', 'text-white', 'shadow-md');
                 btn.classList.add('bg-white', 'text-slate-600');
             });
 
-            document.getElementById(tabId).classList.remove('hidden');
-            const activeBtn = document.getElementById(`tabBtn-${tabId.replace('tab-', '')}`);
+            document.getElementById(`tab-${tabName}`).classList.remove('hidden');
+            const activeBtn = document.getElementById(`tabBtn-${tabName}`);
             if (activeBtn) {
                 activeBtn.classList.remove('bg-white', 'text-slate-600');
                 activeBtn.classList.add('bg-brand-purple', 'text-white', 'shadow-md');
@@ -1086,33 +1095,27 @@
         }
 
         /* PRACTICE EXERCISES LOGIC */
-        let selectedMatchIllness = null;
-        let matchedPairs = 0;
-
         function renderPracticeData() {
-            // Render Matching Illness buttons
             const leftList = document.getElementById('matchLeftList');
             const rightList = document.getElementById('matchRightList');
 
             leftList.innerHTML = practiceData.matches.map((item, idx) => `
-                <button onclick="selectMatchLeft(${idx}, this)" id="match-left-${idx}" class="w-full text-left p-4 bg-slate-50 hover:bg-purple-50 border border-slate-200 rounded-2xl text-sm font-bold text-slate-700 transition">
+                <button onclick="selectMatchLeft(${idx}, this)" id="match-left-${idx}" class="w-full text-left p-4 bg-slate-50 hover:bg-purple-50 border border-slate-200 rounded-2xl text-xs sm:text-sm font-extrabold text-slate-700 transition">
                     ${item.illness}
                 </button>
             `).join('');
 
-            // Shuffle advice items for matching right list
             const shuffledRight = [...practiceData.matches].sort(() => 0.5 - Math.random());
             rightList.innerHTML = shuffledRight.map((item, idx) => `
-                <button onclick="selectMatchRight('${item.advice}', this)" class="w-full text-left p-4 bg-slate-50 hover:bg-teal-50 border border-slate-200 rounded-2xl text-xs font-semibold text-slate-700 transition">
+                <button onclick="selectMatchRight('${item.advice.replace(/'/g, "\\'")}', this)" class="w-full text-left p-4 bg-slate-50 hover:bg-teal-50 border border-slate-200 rounded-2xl text-xs font-bold text-slate-700 transition">
                     💡 ${item.advice}
                 </button>
             `).join('');
 
-            // Render Fill Blanks
             const fillList = document.getElementById('fillBlankList');
             fillList.innerHTML = practiceData.blanks.map((q, idx) => `
                 <div class="bg-slate-50 p-4 rounded-2xl border border-slate-200 space-y-3">
-                    <p class="text-sm font-semibold text-slate-800">${idx + 1}. ${q.text.replace('________', '<span class="inline-block px-3 py-1 bg-white border border-slate-300 rounded-lg text-brand-purple font-bold">______</span>')}</p>
+                    <p class="text-xs sm:text-sm font-bold text-slate-800">${idx + 1}. ${q.text.replace('________', '<span class="inline-block px-3 py-0.5 bg-white border border-slate-300 rounded-lg text-brand-purple font-extrabold">______</span>')}</p>
                     <div class="flex gap-2">
                         ${q.options.map((opt, optIdx) => `
                             <button onclick="checkBlankAnswer(${idx}, ${optIdx}, this)" class="px-4 py-2 bg-white hover:bg-brand-purple hover:text-white border border-slate-200 rounded-xl text-xs font-bold transition">
@@ -1127,14 +1130,13 @@
         function selectMatchLeft(idx, btn) {
             document.querySelectorAll('#matchLeftList button').forEach(b => b.classList.remove('ring-2', 'ring-brand-purple', 'bg-purple-100'));
             btn.classList.add('ring-2', 'ring-brand-purple', 'bg-purple-100');
-            selectedMatchIllness = practiceData.matches[idx];
+            state.selectedMatchIllness = practiceData.matches[idx];
         }
 
         function selectMatchRight(adviceText, btn) {
-            if (!selectedMatchIllness) return;
+            if (!state.selectedMatchIllness) return;
 
-            if (selectedMatchIllness.advice === adviceText) {
-                // Correct match
+            if (state.selectedMatchIllness.advice === adviceText) {
                 btn.classList.add('bg-emerald-100', 'text-emerald-800', 'border-emerald-300');
                 btn.disabled = true;
                 btn.innerHTML = `✅ ${adviceText}`;
@@ -1145,17 +1147,16 @@
                     leftBtn.disabled = true;
                     leftBtn.classList.remove('ring-2', 'ring-brand-purple');
                 }
-                selectedMatchIllness = null;
-                matchedPairs++;
+                state.selectedMatchIllness = null;
                 updatePracticeScore(1);
                 playChimeSound();
             } else {
-                // Wrong match
                 playWrongSound();
                 btn.classList.add('bg-rose-100', 'border-rose-300');
                 setTimeout(() => btn.classList.remove('bg-rose-100', 'border-rose-300'), 800);
             }
         }
+
         function checkBlankAnswer(questionIdx, optIdx, btn) {
             const question = practiceData.blanks[questionIdx];
             const selectedOpt = question.options[optIdx];
@@ -1177,18 +1178,16 @@
             document.getElementById('practiceScoreText').textContent = `${state.practiceScore} / 6`;
         }
 
-        /* DOCTOR CLINIC GAME LOGIC */
+        /* DR. ENGLISH CLINIC GAME LOGIC */
         function loadGamePatient() {
             const patient = gamePatients[state.currentPatientIdx];
             if (!patient) {
-                // Game finished!
                 document.getElementById('gameDesk').classList.add('hidden');
                 document.getElementById('gameFinishScreen').classList.remove('hidden');
                 document.getElementById('finalGameScoreText').textContent = `Final Score: ${state.gameScore}`;
                 return;
             }
 
-            // Reset state
             state.selectedDiagnosis = null;
             state.selectedRemedy = null;
 
@@ -1196,7 +1195,6 @@
             document.getElementById('patientName').textContent = patient.name;
             document.getElementById('patientDialogue').textContent = `"${patient.dialogue}"`;
 
-            // Step 1: Render diagnosis options
             const diagGrid = document.getElementById('diagnosisOptions');
             diagGrid.innerHTML = patient.diagOptions.map(opt => `
                 <button onclick="selectDiagnosis('${opt.id}', this)" class="diag-btn p-3 bg-slate-50 hover:bg-purple-50 border border-slate-200 rounded-xl text-xs font-bold text-slate-700 transition text-center">
@@ -1204,7 +1202,6 @@
                 </button>
             `).join('');
 
-            // Step 2: Render remedy options
             const remedyGrid = document.getElementById('remedyOptions');
             remedyGrid.innerHTML = patient.remedyOptions.map(opt => `
                 <button onclick="selectRemedy('${opt.id}', this)" class="remedy-btn p-3 bg-slate-50 hover:bg-orange-50 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 transition text-left">
@@ -1212,7 +1209,6 @@
                 </button>
             `).join('');
 
-            // Lock step 2 until diagnosis selected
             document.getElementById('remedyStepArea').classList.add('opacity-50', 'pointer-events-none');
             const pBtn = document.getElementById('prescribeBtn');
             pBtn.disabled = true;
@@ -1229,7 +1225,6 @@
             btn.classList.add('bg-brand-purple', 'text-white', 'border-brand-purple');
             state.selectedDiagnosis = diagId;
 
-            // Enable remedy area
             document.getElementById('remedyStepArea').classList.remove('opacity-50', 'pointer-events-none');
             checkGameBtnState();
         }
@@ -1252,7 +1247,6 @@
         function checkPrescription() {
             const patient = gamePatients[state.currentPatientIdx];
             if (state.selectedDiagnosis === patient.correctDiag && state.selectedRemedy === patient.correctRemedy) {
-                // Correct Prescription
                 playChimeSound();
                 state.gameScore += 25;
                 state.currentPatientIdx++;
@@ -1263,10 +1257,9 @@
                 loadGamePatient();
             } else {
                 playWrongSound();
-                // Visual feedback wrong answer
                 const pBtn = document.getElementById('prescribeBtn');
-                pBtn.classList.add('animate-bounce', 'bg-rose-500');
-                setTimeout(() => pBtn.classList.remove('animate-bounce', 'bg-rose-500'), 1000);
+                pBtn.classList.add('bg-rose-500');
+                setTimeout(() => pBtn.classList.remove('bg-rose-500'), 800);
             }
         }
 
@@ -1280,32 +1273,26 @@
             loadGamePatient();
         }
 
-        /* ASSESSMENT & QUIZ LOGIC */
-        let currentQuestionAnswer = null;
-
+        /* ASSESSMENT QUIZ LOGIC */
         function loadQuizQuestion() {
             const q = quizQuestions[state.quizIndex];
             document.getElementById('quizQuestionNum').textContent = `Question ${state.quizIndex + 1} of ${quizQuestions.length}`;
             document.getElementById('quizProgressBar').style.width = `${((state.quizIndex + 1) / quizQuestions.length) * 100}%`;
-            document.getElementById('questionTag').textContent = q.tag;
+            document.getElementById('quizTag').textContent = q.tag;
             document.getElementById('questionText').textContent = q.question;
 
             const grid = document.getElementById('quizOptionsGrid');
             grid.innerHTML = q.options.map((opt, idx) => `
                 <label class="quiz-option-label flex items-center gap-3 p-4 bg-slate-50 border border-slate-200 rounded-2xl cursor-pointer hover:bg-purple-50 transition">
                     <input type="radio" name="quizOpt" value="${idx}" class="w-5 h-5 text-brand-purple focus:ring-brand-purple">
-                    <span class="text-sm font-semibold text-slate-700">${opt}</span>
+                    <span class="text-xs sm:text-sm font-bold text-slate-700">${opt}</span>
                 </label>
             `).join('');
-
-            currentQuestionAnswer = null;
         }
 
         function submitQuizAnswer() {
             const selected = document.querySelector('input[name="quizOpt"]:checked');
-            if (!selected) {
-                return; // Must select an answer
-            }
+            if (!selected) return;
 
             const val = parseInt(selected.value);
             if (val === quizQuestions[state.quizIndex].answer) {
@@ -1326,11 +1313,11 @@
             document.getElementById('quizResultScreen').classList.remove('hidden');
 
             document.getElementById('certStudentName').textContent = state.student.name || "Student Doctor";
-            document.getElementById('certStudentDetails').textContent = state.student.class || 'Grade 6';
+            document.getElementById('certStudentDetails').textContent = `Class ${state.student.class || '6'}`;
             document.getElementById('certScoreDisplay').textContent = `${state.quizScore} / 100`;
 
             let gradeText = "Grade: Excellent Doctor! 🌟";
-            if (state.quizScore < 70) gradeText = "Grade: Keep Practicing, Doctor! 💪";
+            if (state.quizScore < 70) gradeText = "Grade: Good Effort, Doctor! 💪";
             document.getElementById('certGradeFeedback').textContent = gradeText;
 
             playChimeSound();
@@ -1344,7 +1331,7 @@
             loadQuizQuestion();
         }
 
-        /* REFLECTION LOGIC */
+        /* STUDENT REFLECTION LOGIC */
         function selectMood(btn) {
             document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('border-brand-purple', 'bg-purple-100', 'ring-2', 'ring-brand-purple'));
             btn.classList.add('border-brand-purple', 'bg-purple-100', 'ring-2', 'ring-brand-purple');
@@ -1354,9 +1341,6 @@
             playChimeSound();
             navigateTo('menu');
         }
-
-        // Initialize quiz on load
-        loadQuizQuestion();
     </script>
 </body>
 </html>
